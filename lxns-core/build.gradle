@@ -1,0 +1,54 @@
+apply plugin: 'com.android.library'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+    defaultConfig {
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ moduleName : project.getName() ]
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    kapt {
+        generateStubs = true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    api project(':arms')
+    api rootProject.ext.dependencies["arouter"]
+    api rootProject.ext.dependencies["tangram-android"]
+    api rootProject.ext.dependencies["logger"]
+    api rootProject.ext.dependencies["takephoto"]
+    api rootProject.ext.dependencies["barlibrary"]
+    api rootProject.ext.dependencies["autosize"]
+    api rootProject.ext.dependencies["baseRecyclerViewAdapter"]
+    api rootProject.ext.dependencies["SmartRefreshLayout"]
+    api rootProject.ext.dependencies["EasySwipeMenuLayout"]
+    api rootProject.ext.dependencies["qmui"]
+    api rootProject.ext.dependencies["pickerview"]
+    api(rootProject.ext.dependencies["bottom-navigation-bar"]) {
+        exclude module: 'design'
+        exclude module: 'appcompat-v7'
+    }
+    api rootProject.ext.dependencies["utilcode"]
+}
