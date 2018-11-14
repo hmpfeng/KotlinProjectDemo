@@ -2,12 +2,12 @@ package com.wsst.lxns.base
 
 import android.os.Bundle
 import com.tmall.wireless.tangram.TangramBuilder
-import com.wsst.lxns.app.GlobalConfig
 import com.wsst.lxns.app.widget.RefreshRecyclerView
 import com.wsst.lxns.base.http.BasicsResponse
 import com.wsst.lxns.base.http.RefreshPageRequest
 import com.wsst.lxns.base.http.RequestType
 import com.wsst.lxns.base.http.RequestTypeDef
+import com.wsst.lxns.config.*
 import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy
 
@@ -42,15 +42,15 @@ abstract class RefreshPageActivity<T, R : RefreshPageRequest> : BasicsActivity()
     }
 
 
-    override fun  callBack(response: BasicsResponse?, tag: Int) {
+    override fun callBack(response: BasicsResponse?, tag: Int) {
         try {
-            when(tag){
-                GlobalConfig.LOAD -> adjustList(response)
+            when (tag) {
+                LOAD -> adjustList(response)
             }
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {
-            if(getRecyclerView().getRefreshRecyclerLayout() != null){
+            if (getRecyclerView().getRefreshRecyclerLayout() != null) {
 //                if(getRecyclerView().getRefreshRecyclerLayout().)
             }
         }
@@ -70,7 +70,7 @@ abstract class RefreshPageActivity<T, R : RefreshPageRequest> : BasicsActivity()
     }
 
     protected fun requestForPage(page: Int) {
-        mPresenter?.request(getMethod(), createRequest(page), false, if (page == 1) GlobalConfig.LOAD else GlobalConfig.LOAD_MORE)
+        mPresenter?.request(getMethod(), createRequest(page), false, if (page == 1) LOAD else LOAD_MORE)
     }
 
     protected abstract fun createRequest(page: Int): R

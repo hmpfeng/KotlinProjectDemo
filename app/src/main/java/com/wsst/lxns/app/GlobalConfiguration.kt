@@ -12,7 +12,8 @@ import com.jess.arms.integration.ConfigModule
 import com.jess.arms.integration.cache.IntelligentCache
 import com.jess.arms.utils.ArmsUtils
 import com.squareup.leakcanary.RefWatcher
-import com.wsst.lxns.BuildConfig
+import com.wsst.lxns.BuildConfig.DEBUG
+import com.wsst.lxns.config.*
 import com.wsst.lxns_core.http.cookie.CookieJarImpl
 import com.wsst.lxns_core.http.cookie.store.PersistentCookieStore
 import com.wsst.lxns_core.https.HttpsUtils
@@ -25,11 +26,11 @@ import java.util.concurrent.TimeUnit
  */
 class GlobalConfiguration : ConfigModule {
     override fun applyOptions(context: Context?, builder: GlobalConfigModule.Builder?) {
-        if (!BuildConfig.DEBUG) { //Release 时,让框架不再打印 Http 请求和响应的信息
+        if (!DEBUG) { //Release 时,让框架不再打印 Http 请求和响应的信息
             builder!!.printHttpLogLevel(RequestInterceptor.Level.NONE)
         }
         //使用 builder 可以为框架配置一些配置信息
-        builder!!.baseurl(GlobalConfig.API)
+        builder!!.baseurl(API)
                 // 这里提供一个全局处理 Http 请求和响应结果的处理类,可以比客户端提前一步拿到服务器返回的结果,可以做一些操作,比如token超时,重新获取
                 .globalHttpHandler(GlobalHttpHandlerImpl(context))
                 // 用来处理 rxjava 中发生的所有错误,rxjava 中发生的每个错误都会回调此接口

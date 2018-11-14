@@ -4,8 +4,7 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
-apply plugin: 'kotlin-kapt'
-
+apply plugin:'kotlin-kapt'
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
 
@@ -45,10 +44,8 @@ android {
             multiDexKeepProguard file('./multidex-config.pro')
         }
     }
+     sourceSets{main.java.srcDirs+="src/main/kotlin"}
 
-    kapt {
-        generateStubs = true
-    }
 }
 
 dependencies {

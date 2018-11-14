@@ -6,7 +6,7 @@ import android.text.TextUtils
 import com.google.gson.Gson
 import com.jess.arms.integration.AppManager
 import com.jess.arms.utils.ArmsUtils
-import com.wsst.lxns.app.GlobalConfig
+import com.wsst.lxns.config.APP_TIMEOUT
 
 import org.json.JSONObject
 
@@ -81,7 +81,7 @@ class JsonResponse : BasicsResponse() {
 
                 if (error_code == 301) {//TOKEN失效，直接回滚到登录界面
                     val message = Message()
-                    message.what = GlobalConfig.APP_TIMEOUT
+                    message.what = APP_TIMEOUT
                     AppManager.post(message)
                 }
             } catch (e: Exception) {
