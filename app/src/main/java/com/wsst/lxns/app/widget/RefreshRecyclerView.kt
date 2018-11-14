@@ -39,7 +39,7 @@ class RefreshRecyclerView : RecyclerView {
         offsetItemCount = 0
         mRefreshLayout?.setOnRefreshListener {
             it.setNoMoreData(false)
-            mOnLoadingPageListener!!.onRefresh(1)
+            mOnLoadingPageListener?.onRefresh(1)
         }
         mRefreshLayout?.setOnLoadMoreListener(createOnLoadMoreListener())
         offsetItemCount++//默认给显示更多view +1
