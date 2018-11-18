@@ -13,35 +13,16 @@ import java.io.ObjectOutputStream
 
 //  sp  取值
 fun <T> SharedPreferences.getValue(key: String, default: T): T = this.run {
-    fun <T> deSerialize(str: String): T {
-        val redStr = java.net.URLEncoder.encode(str, "UTF-8")
-        val byteArrayInputStream = ByteArrayInputStream(
-                redStr.toByteArray(charset("ISO-8859-1"))
-        )
-        val objectInputStream = ObjectInputStream(byteArrayInputStream)
-        val obj = objectInputStream.readObject() as T
-        objectInputStream.close()
-        byteArrayInputStream.close()
-        return obj
-    }
 
-    fun <T> serialize(value: T): String {
-        val byteArrayOutPutStream = ByteArrayOutputStream()
-        val objectOutputStream = ObjectOutputStream(byteArrayOutPutStream)
-        objectOutputStream.writeObject(value)
-        var serStr = byteArrayOutPutStream.toString("ISO-8859-1")
-        serStr = java.net.URLEncoder.encode(serStr, "UTF-8")
-        objectOutputStream.close()
-        byteArrayOutPutStream.close()
-        return serStr
-    }
 
     val any: Any = when (default) {
         is Int -> getInt(key, default)
         is String -> getString(key, default)
         is Boolean -> getBoolean(key, default)
         is Long -> getLong(key, default)
-        else -> deSerialize(getString(key, serialize(default)))
+        is Any -> deSerialize(getString(key, serialize(default)))
+        else -> {
+        }
     }
     any as T
 }
@@ -49,6 +30,18 @@ fun <T> SharedPreferences.getValue(key: String, default: T): T = this.run {
 //  sp  存值
 fun <T> SharedPreferences.putValue(key: String, value: T) {
     this.edit().apply {
+        fun <T> deSerialize(str: String): T {
+            val redStr = java.net.URLEncoder.encode(str, "UTF-8")
+            val byteArrayInputStream = ByteArrayInputStream(
+                    redStr.toByteArray(charset("ISO-8859-1"))
+            )
+            val objectInputStream = ObjectInputStream(byteArrayInputStream)
+            val obj = objectInputStream.readObject() as T
+            objectInputStream.close()
+            byteArrayInputStream.close()
+            return obj
+        }
+
         fun <T> serialize(value: T): String {
             val byteArrayOutPutStream = ByteArrayOutputStream()
             val objectOutputStream = ObjectOutputStream(byteArrayOutPutStream)
@@ -64,11 +57,34 @@ fun <T> SharedPreferences.putValue(key: String, value: T) {
             is String -> putString(key, value)
             is Boolean -> putBoolean(key, value)
             is Long -> putLong(key, value)
-            else -> putString(key, serialize(value))
-//            else -> throw IllegalArgumentException("This type can be get from Preferences")
+            is Any -> putString(key, serialize(value))
+            else -> throw IllegalArgumentException("This type can be get from Preferences")
         }
     }.apply()
 
+}
+
+private fun <T> deSerialize(str: String): T {
+    val redStr = java.net.URLEncoder.encode(str, "UTF-8")
+    val byteArrayInputStream = ByteArrayInputStream(
+            redStr.toByteArray(charset("ISO-8859-1"))
+    )
+    val objectInputStream = ObjectInputStream(byteArrayInputStream)
+    val obj = objectInputStream.readObject() as T
+    objectInputStream.close()
+    byteArrayInputStream.close()
+    return obj
+}
+
+private fun <T> serialize(value: T): String {
+    val byteArrayOutPutStream = ByteArrayOutputStream()
+    val objectOutputStream = ObjectOutputStream(byteArrayOutPutStream)
+    objectOutputStream.writeObject(value)
+    var serStr = byteArrayOutPutStream.toString("ISO-8859-1")
+    serStr = java.net.URLEncoder.encode(serStr, "UTF-8")
+    objectOutputStream.close()
+    byteArrayOutPutStream.close()
+    return serStr
 }
 
 // sp 清空
