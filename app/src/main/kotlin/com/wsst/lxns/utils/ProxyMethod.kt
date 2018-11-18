@@ -23,4 +23,6 @@ class ProxyMethod<T>(private val name: String, private val default: T) : ReadWri
     override fun getValue(thisRef: Any?, property: KProperty<*>): T = sp.getValue(name, default)
 
     override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) = sp.putValue(name, value)
+
+
 }

@@ -27,10 +27,18 @@ class RefreshRecyclerView : RecyclerView {
 
     private var mRefreshLayout: RefreshRecyclerLayout? = null
 
+    /**
+     * 绑定刷新框架
+     * @param mRefreshLayout SmartRefreshLayout
+     */
     fun bindRefresh(mRefreshLayout: RefreshRecyclerLayout) {
         this.mRefreshLayout = mRefreshLayout
     }
 
+    /**
+     * 获取刷新框架
+     * @return SmartRefreshLayout
+     */
     fun getRefreshRecyclerLayout(): RefreshRecyclerLayout? {
         return mRefreshLayout
     }
@@ -38,14 +46,20 @@ class RefreshRecyclerView : RecyclerView {
     override fun setAdapter(adapter: Adapter<*>?) {
         offsetItemCount = 0
         mRefreshLayout?.setOnRefreshListener {
-            it.setNoMoreData(false)
-            mOnLoadingPageListener?.onRefresh(1)
+            it.setNoMoreData(false)//取消没有更多数据提醒
+            mOnLoadingPageListener?.onRefresh(1) //开始刷新
         }
-        mRefreshLayout?.setOnLoadMoreListener(createOnLoadMoreListener())
+        mRefreshLayout?.setOnLoadMoreListener(createOnLoadMoreListener())//加载更多数据
         offsetItemCount++//默认给显示更多view +1
         super.setAdapter(adapter)
     }
 
+    /**
+     * 获取当前页数
+     * @param itemCount 当前Item剔除过后的数量
+     * @param rowCount  一页的数量，默认为10
+     * @return 当前页数
+     */
     private fun getPage(itemCount: Int, rowCount: Int): Int {
         val page: Int
         val temp = itemCount.toDouble() / rowCount
@@ -71,17 +85,20 @@ class RefreshRecyclerView : RecyclerView {
             if (adapter == null)
                 return@OnLoadMoreListener
             if (adapter.itemCount <= 0) {
+                //加载失败
                 it.finishLoadMore(false)
                 return@OnLoadMoreListener
             } else if ((adapter.itemCount - offsetItemCount) <= rowCount) {
+                //加载成功
                 oldItem = 0
                 it.finishLoadMore()
             }
-            val newItem = adapter.itemCount - offsetItemCount - oldItem
-
+            val newItem = adapter.itemCount - offsetItemCount - oldItem //加载成功的 新条目数
+            //获取当前页数
             val page = getPage(adapter.itemCount - offsetItemCount, rowCount)
             if (newItem > 0) {
                 if (newItem < rowCount) {
+                    //设置为没有更多数据，如果需要再一次加载数据调用setNoMoreData(false)打开
                     it.finishLoadMoreWithNoMoreData()
                     Logger.w("没有下一页")
                 } else {
@@ -89,16 +106,14 @@ class RefreshRecyclerView : RecyclerView {
                         it.finishLoadMoreWithNoMoreData()
                         Logger.w("没有下一页")
                     } else if (mOnLoadingPageListener != null) {
-                        mOnLoadingPageListener!!.onLoadMore(page)
+                        mOnLoadingPageListener!!.onLoadMore(page)//加载数据
                         Logger.w("有下一页:$page")
                     }
                 }
-                oldItem = adapter.itemCount - offsetItemCount
+                oldItem = adapter.itemCount - offsetItemCount //记录这一次加载完成之后的Item数量
             } else {
-                if (mOnLoadingPageListener != null) {
-                    mOnLoadingPageListener!!.onLoadMore(page)
-                    Logger.w("第一页:$page")
-                }
+                mOnLoadingPageListener?.onLoadMore(page)//加载数据
+                Logger.w("第一页:$page")
             }
         }
     }
