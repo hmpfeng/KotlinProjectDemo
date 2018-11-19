@@ -45,11 +45,13 @@ class RefreshRecyclerView : RecyclerView {
 
     override fun setAdapter(adapter: Adapter<*>?) {
         offsetItemCount = 0
-        mRefreshLayout?.setOnRefreshListener {
-            it.setNoMoreData(false)//取消没有更多数据提醒
-            mOnLoadingPageListener?.onRefresh(1) //开始刷新
+        with(mRefreshLayout) {
+            this?.setOnRefreshListener {
+                setNoMoreData(false)//取消没有更多数据提醒
+                mOnLoadingPageListener?.onRefresh(1)//开始刷新
+            }
+            this?.setOnLoadMoreListener(createOnLoadMoreListener())//加载更多数据
         }
-        mRefreshLayout?.setOnLoadMoreListener(createOnLoadMoreListener())//加载更多数据
         offsetItemCount++//默认给显示更多view +1
         super.setAdapter(adapter)
     }
