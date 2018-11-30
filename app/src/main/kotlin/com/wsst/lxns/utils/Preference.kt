@@ -12,7 +12,7 @@ import kotlin.reflect.KProperty
 * @author 苏磊
 * @describe 委托属性
 */
-class ProxyMethod<T>(private val name: String, private val default: T) : ReadWriteProperty<Any?, T> {
+class Preference<T>(private val name: String, private val default: T) : ReadWriteProperty<Any?, T> {
     companion object {
         private lateinit var sp: SharedPreferences
         fun initPreferences(context: Context) {

@@ -17,7 +17,7 @@ import com.squareup.leakcanary.RefWatcher
 import com.tmall.wireless.tangram.TangramBuilder
 import com.tmall.wireless.tangram.util.IInnerImageSetter
 import com.wsst.lxns.BuildConfig
-import com.wsst.lxns.utils.ProxyMethod
+import com.wsst.lxns.utils.Preference
 import timber.log.Timber
 
 
@@ -78,7 +78,7 @@ class AppLifecyclesImpl : AppLifecycles {
             }
         }, ImageView::class.java)
 
-        ProxyMethod.initPreferences(application)
+        Preference.initPreferences(application)
     }
 
     override fun onTerminate(application: Application) {
