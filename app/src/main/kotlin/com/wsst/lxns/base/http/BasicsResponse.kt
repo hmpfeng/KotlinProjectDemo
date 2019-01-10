@@ -7,11 +7,9 @@ import org.json.JSONException
  */
 abstract class BasicsResponse {
     var fullData: String? = "" //完整json
-    var error_msg: String? = ""
-    var error_code: Int? = 0
-    var return_code: Int? = 0
-    var data_total: Int? = 0
-    var data: String? = "" //内容json
+    var msg: String? = ""
+    var retCode: Int? = 0
+    var resultJson: String? = "" //内容json
 
     /**
      * 解析单条数据

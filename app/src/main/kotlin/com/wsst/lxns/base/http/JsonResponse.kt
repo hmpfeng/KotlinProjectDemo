@@ -13,17 +13,17 @@ import org.json.JSONObject
 /**
  * Created by 谢岳峰 on 2018/9/7.
  */
-class JsonResponse : BasicsResponse() {
+open class JsonResponse : BasicsResponse() {
 
     @Throws(IllegalArgumentException::class)
     override fun <T> getBean(clazz: Class<T>, isFull: Boolean): T {
-        if (!isFull && TextUtils.isEmpty(data)) {
+        if (!isFull && TextUtils.isEmpty(resultJson)) {
             throw IllegalArgumentException("In the JsonResponse, data can't be empty")
         } else if (isFull && TextUtils.isEmpty(fullData)) {
             throw IllegalArgumentException("In the JsonResponse, Ful data can't be empty")
         }
         var objectClass: T? = null
-        if (isFull && TextUtils.isEmpty(data)) {
+        if (isFull && TextUtils.isEmpty(resultJson)) {
             try {
                 return Class.forName(clazz.name).newInstance() as T
             } catch (e: InstantiationException) {
@@ -36,7 +36,7 @@ class JsonResponse : BasicsResponse() {
 
         } else {
             val gson = Gson()
-            objectClass = gson.fromJson(if (isFull) fullData else data, clazz)
+            objectClass = gson.fromJson(if (isFull) fullData else resultJson, clazz)
         }
         return objectClass!!
     }
@@ -46,40 +46,32 @@ class JsonResponse : BasicsResponse() {
         fun getResponse(json: String, isShowToast: BooleanArray?): JsonResponse {
             val mResponse = JsonResponse()
             mResponse.fullData = json
-            var return_code = 1
-            var data_toal = 0
-            var error_code = 1
+            var retCode = 1
             var msg: String? = ""
-            var data = ""
+            var resultJson = ""
             val jsonObject: JSONObject?
             try {
                 jsonObject = JSONObject(json)
-                val hasCode = jsonObject.has("error_Code")
+                val hasCode = jsonObject.has("retCode")
                 if (hasCode)
-                    error_code = jsonObject.getInt("error_Code")
-                val hasMsg = jsonObject.has("error_Msg")
+                    retCode = jsonObject.getInt("retCode")
+                val hasMsg = jsonObject.has("msg")
                 if (hasMsg)
-                    msg = jsonObject.getString("error_Msg")
-                val hasRCode = jsonObject.has("return_code")
-                if (hasRCode)
-                    return_code = jsonObject.getInt("return_code")
-                val hasToal = jsonObject.has("data_total")
-                if (hasToal)
-                    data_toal = jsonObject.getInt("data_toal")
-                val hasData = jsonObject.has("data")
+                    msg = jsonObject.getString("msg")
+                val hasData = jsonObject.has("result")
                 if (hasData)
-                    data = jsonObject.getString("data")
+                    resultJson = jsonObject.getString("result")
                 if (isShowToast != null) {
-                    if (error_code != 0 && return_code != 0 && isShowToast[1]) {
+                    if (retCode != 200 && isShowToast[1]) {
                         //提示Toast
                         ArmsUtils.snackbarText(msg)
-                    } else if (msg != null && msg != "" && error_code == 0 && isShowToast[0]) {
+                    } else if (msg != null && msg != "" && isShowToast[0]) {
                         //提示Toast
                         ArmsUtils.snackbarText(msg)
                     }
                 }
 
-                if (error_code == 301) {//TOKEN失效，直接回滚到登录界面
+                if (retCode == 301) {//TOKEN失效，直接回滚到登录界面
                     val message = Message()
                     message.what = APP_TIMEOUT
                     AppManager.post(message)
@@ -88,11 +80,9 @@ class JsonResponse : BasicsResponse() {
                 e.printStackTrace()
             }
 
-            mResponse.return_code = return_code
-            mResponse.data_total = data_toal
-            mResponse.error_code = error_code
-            mResponse.error_msg = msg
-            mResponse.data = data
+            mResponse.retCode = retCode
+            mResponse.msg = msg
+            mResponse.resultJson = resultJson
             return mResponse
         }
     }
