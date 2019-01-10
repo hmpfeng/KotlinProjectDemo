@@ -6,6 +6,7 @@ import com.wsst.lxns.base.RefreshPageActivity
 import com.wsst.lxns.base.http.BasicsResponse
 
 class GuideActivity : RefreshPageActivity<CTGResponse.ResultBean.ListBean, CTGRequest>() {
+
     override fun getRecyclerView(): RefreshRecyclerView = findViewById(R.id.guide_rv)
 
     override fun adjustList(response: BasicsResponse?): List<CTGResponse.ResultBean.ListBean> {
