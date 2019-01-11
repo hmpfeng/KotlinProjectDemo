@@ -9,6 +9,6 @@ import javax.inject.Scope
  * Created by 谢岳峰 on 2018/10/22.
  */
 @Scope
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
+@kotlin.annotation.MustBeDocumented
+@kotlin.annotation.Retention
 annotation class BasicsScope

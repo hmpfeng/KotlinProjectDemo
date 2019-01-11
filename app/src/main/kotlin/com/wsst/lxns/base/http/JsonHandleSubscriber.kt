@@ -19,9 +19,9 @@ abstract class JsonHandleSubscriber(rxErrorHandler: RxErrorHandler) : ErrorHandl
             } else {
                 onDefinedError(jsonResponse.retCode!!)
             }
-        } catch (e: IOException) {
+        } catch (e: Exception) {
             e.printStackTrace()
-            onError(null!!)
+            onError(e)
         }
     }
 

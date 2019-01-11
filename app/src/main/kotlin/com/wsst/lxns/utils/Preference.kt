@@ -16,7 +16,7 @@ class Preference<T>(private val name: String, private val default: T) : ReadWrit
     companion object {
         private lateinit var sp: SharedPreferences
         fun initPreferences(context: Context) {
-            sp = context.getSharedPreferences(this.javaClass.name, 0)
+            sp = context.getSharedPreferences(Preference::class.java.name, 0)
         }
     }
 

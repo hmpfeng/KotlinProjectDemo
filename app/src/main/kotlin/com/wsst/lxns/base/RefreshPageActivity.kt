@@ -20,12 +20,12 @@ abstract class RefreshPageActivity<T, R : RefreshPageRequest> : BasicsActivity()
     private val mDataList: MutableList<T> = arrayListOf()
 
     @RequestTypeDef(RequestType.REQUEST_GET, RequestType.REQUEST_POST)
-    @Retention(RetentionPolicy.SOURCE)
+    @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
     annotation class State
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val builder = TangramBuilder.newInnerBuilder(activity)
+//        val builder = TangramBuilder.newInnerBuilder(activity)
     }
 
     override fun initData(savedInstanceState: Bundle?) {

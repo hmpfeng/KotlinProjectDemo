@@ -5,6 +5,6 @@ package com.wsst.lxns.base.adapter
  * Created by 谢岳峰 on 2018/10/31.
  */
 interface IDelegateAdapter<T> {
-    open var data: MutableList<T>
+     var data: MutableList<T>
 
 }
