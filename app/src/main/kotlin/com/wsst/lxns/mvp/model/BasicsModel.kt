@@ -12,6 +12,7 @@ import io.reactivex.functions.Function
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import javax.inject.Inject
+import kotlin.jvm.java
 
 /**
  * Created by 谢岳峰 on 2018/10/22.

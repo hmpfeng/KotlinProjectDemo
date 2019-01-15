@@ -22,15 +22,11 @@ constructor(mModel: IBasics.Model, mRootView: IBasics.View,
     : BasePresenter<IBasics.Model, IBasics.View>() {
 
     fun <T : BasicsRequest> request(requestType: RequestType, t: T, showLoading: Boolean, tag: Int) {
-        if (t == null) {
-            mRootView.callBack(null, tag)
-            return
-        }
-        val request: Observable<WSSTResponse>? = when (requestType) {
+        val request: Observable<WSSTResponse> = when (requestType) {
             RequestType.REQUEST_GET -> mModel.get(t)
             RequestType.REQUEST_POST -> mModel.post(t)
         }
-        request!!.subscribeOn(Schedulers.io())
+        request.subscribeOn(Schedulers.io())
                 .retryWhen(RetryWithDelay(1, 2))
                 .doOnSubscribe { _ -> if (showLoading) mRootView.showLoading() }
                 .subscribeOn(AndroidSchedulers.mainThread())

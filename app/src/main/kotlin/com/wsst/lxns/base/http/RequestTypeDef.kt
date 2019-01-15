@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy
 /**
  * Created by 谢岳峰 on 2018/10/31.
  */
-@Retention(RetentionPolicy.SOURCE)
+@kotlin.annotation.Retention(AnnotationRetention.SOURCE)
 @kotlin.annotation.Target(AnnotationTarget.ANNOTATION_CLASS)
 annotation class RequestTypeDef(
         /** Defines the allowed constants for this element  */
