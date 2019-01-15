@@ -21,7 +21,7 @@ abstract class JsonHandleSubscriber(rxErrorHandler: RxErrorHandler) : ErrorHandl
             }
         } catch (e: IOException) {
             e.printStackTrace()
-            onError(null!!)
+            onError(e)
         }
     }
 

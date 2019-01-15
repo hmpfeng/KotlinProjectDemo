@@ -16,6 +16,10 @@
             android:name="design_height_in_dp"
             android:value="640"/>
 
+        <meta-data
+            android:name="com.wsst.lxns.app.GlobalConfiguration"
+            android:value="ConfigModule"/>
+
         <activity android:name=".GuideActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,15 +1,15 @@
 ext {
 
     android = [
-            compileSdkVersion: 27,
+            compileSdkVersion: 26,
             minSdkVersion    : 23,//16
-            targetSdkVersion : 27,
+            targetSdkVersion : 26,
             versionCode      : 1,
             versionName      : "1.0"
     ]
 
     version = [
-            androidSupportSdkVersion: "27.1.0",
+            androidSupportSdkVersion: "26.1.0",
             retrofitSdkVersion      : "2.4.0",
             dagger2SdkVersion       : "2.15",
             glideSdkVersion         : "4.6.1",
@@ -44,7 +44,7 @@ ext {
 
             //view
             "autolayout"               : "com.zhy:autolayout:1.4.5",
-            "autosize"                 : "me.jessyan:autosize:1.0.0",
+            "autosize"                 : "me.jessyan:autosize:1.1.2",
             "butterknife"              : "com.jakewharton:butterknife:${version["butterknifeSdkVersion"]}",
             "butterknife-compiler"     : "com.jakewharton:butterknife-compiler:${version["butterknifeSdkVersion"]}",
             "SmartRefreshLayout"       : "com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14",
@@ -53,7 +53,6 @@ ext {
             "numberprogressbar"        : "com.daimajia.numberprogressbar:library:1.2@aar",
             "nineoldandroids"          : "com.nineoldandroids:library:2.4.0",
             "paginate"                 : "com.github.markomilos:paginate:0.5.1",
-            "tangram-android"          : "com.alibaba.android:tangram:2.0.5@aar",
 
             //rx1
             "rxandroid"                : "io.reactivex:rxandroid:1.2.1",

@@ -18,12 +18,15 @@ package com.jess.arms.base;
 import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.jess.arms.base.delegate.AppDelegate;
 import com.jess.arms.base.delegate.AppLifecycles;
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.utils.ArmsUtils;
 import com.jess.arms.utils.Preconditions;
+
+import java.util.logging.Logger;
 
 /**
  * ================================================

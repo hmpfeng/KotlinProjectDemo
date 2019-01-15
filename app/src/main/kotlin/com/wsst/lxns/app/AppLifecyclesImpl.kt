@@ -3,6 +3,7 @@ package com.wsst.lxns.app
 import android.app.Application
 import android.content.Context
 import android.support.multidex.MultiDex
+import android.util.Log
 import android.widget.ImageView
 import butterknife.ButterKnife
 import com.alibaba.android.arouter.launcher.ARouter
@@ -71,12 +72,6 @@ class AppLifecyclesImpl : AppLifecycles {
         ARouter.openLog()     // 打印日志
         ARouter.openDebug()   // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
         ARouter.init(application)
-
-        TangramBuilder.init(application, object : IInnerImageSetter {
-            override fun <IMAGE : ImageView?> doLoadImageUrl(view: IMAGE, url: String?) {
-                Glide.with(application).load(url).into(view as ImageView)
-            }
-        }, ImageView::class.java)
 
         Preference.initPreferences(application)
     }

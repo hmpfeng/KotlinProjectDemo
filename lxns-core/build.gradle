@@ -36,7 +36,6 @@ dependencies {
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     api project(':arms')
     api rootProject.ext.dependencies["arouter"]
-    api rootProject.ext.dependencies["tangram-android"]
     api rootProject.ext.dependencies["logger"]
     api rootProject.ext.dependencies["takephoto"]
     api rootProject.ext.dependencies["barlibrary"]

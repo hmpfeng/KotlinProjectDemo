@@ -1,7 +1,6 @@
 package com.wsst.lxns.base
 
 import android.os.Bundle
-import com.tmall.wireless.tangram.TangramBuilder
 import com.wsst.lxns.app.widget.RefreshRecyclerView
 import com.wsst.lxns.base.http.BasicsResponse
 import com.wsst.lxns.base.http.RefreshPageRequest
@@ -25,7 +24,6 @@ abstract class RefreshPageActivity<T, R : RefreshPageRequest> : BasicsActivity()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val builder = TangramBuilder.newInnerBuilder(activity)
     }
 
     override fun initData(savedInstanceState: Bundle?) {
